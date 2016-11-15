@@ -30,7 +30,7 @@ class RegisterConsole extends Command
     /**
      * 建構式
      *
-     * @param ProjectCheckService $check
+     * @param TelegramSzervice $check
      * @return void
     */
     public function __construct(TelegramService $telegram)
@@ -47,13 +47,17 @@ class RegisterConsole extends Command
     public function handle()
     {
         // 檔案紀錄在 storage/logs/laravel.log
-        $log_file_path = storage_path('laravel.log');
+        $log_file_path = storage_path('logs/laravel.log');
 
         //執行排程檢查
-        $register = $this->telegram->botRegister('@sparkTestBot');;
+        $register = $this->telegram->botRegister('@upgiRegisterBot');;
         foreach ($register as $re) {
             //寫入log
-            $log_info = '@register: '. (string) $re;
+            if ($re->ok) {
+                $log_info = '@register: success. '. $re->result->text . '\r\n';
+            } else {
+                $log_info = '@register: fail. ' . $re['msg'] . '\r\n';
+            }
             File::append($log_file_path, $log_info);
         }
     }

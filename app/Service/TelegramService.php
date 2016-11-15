@@ -24,6 +24,7 @@ class TelegramService
         $ok = $data->ok;
         $lastID = '';
         $updateData = [];
+        $return = [];
         if ($ok) {
             $lastID = $updateID;
             $result = $data->result;
@@ -40,7 +41,8 @@ class TelegramService
                     $updateUser = $this->telegram->updateUserTelegramID($erpID, $from_id);
 
                     if (!$updateUser['success']) {
-                        return $updateUser['msg'];
+                        array_push($return, ['ok' => false, 'msg' => $updateUser['msg']]);
+                        return $return;
                     }
                     
                     $array['erpID'] = $erpID;
@@ -53,7 +55,7 @@ class TelegramService
         }
 
         //發送申請成功訊息給使用者
-        $return = [];
+        
         foreach ($updateData as $up) {
             $erpID = $up['erpID'];
             $telegramID = $up['telegramID'];
