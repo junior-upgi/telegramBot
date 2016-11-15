@@ -27,7 +27,7 @@ class BotTableSeeder extends Seeder
         $this->bot->insert([
             'name' => '@upgiRegisterBot',
             'token' => '296411532:AAF9U92K7LLKB7g-jvvG4remdHGi90ph2fI',
-            'updateID' => '831723816',
+            'updateID' => '831723818',
         ]);
     }
 }
