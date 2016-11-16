@@ -12,6 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+/*
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -20,5 +21,40 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+*/
+
+$factory->define(App\Models\telegram\Bot::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'token' => $faker->word,
+        'updateID' => $faker->word,
+    ];
+});
+
+$factory->define(App\Models\telegram\Message::class, function (Faker\Generator $faker) {
+    return [
+        'botID' => $faker->word,
+        'updateID' => $faker->word,
+        'fromID' => $faker->word,
+        'fromUserName' => $faker->word,
+        'date' => $faker->word,
+        'text' => $faker->word,
+    ];
+});
+
+$factory->define(App\Models\telegram\Setting::class, function (Faker\Generator $faker) {
+    return [
+        'settingCode' => $faker->word,
+        'value' => $faker->word,
+    ];
+});
+
+$factory->define(App\Models\upgiSystem\User::class, function (Faker\Generator $faker) {
+    return [
+        'ID' => $faker->word,
+        'mobileSystemAccount' => $faker->word,
+        'telegramID' => $faker->word,
     ];
 });

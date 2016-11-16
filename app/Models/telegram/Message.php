@@ -10,7 +10,17 @@ class Message extends Model
     protected $connection = 'telegram';
     protected $table = "message";
 
-    public function bot () {
+    protected $fillable = [
+        'botID',
+        'updateID',
+        'fromID',
+        'fromUserName',
+        'date',
+        'text',
+    ];
+
+    public function bot () 
+    {
         $result = $this->hasOne('App\Models\telegram\Bot', 'id', 'botID');
         return $result;
     }

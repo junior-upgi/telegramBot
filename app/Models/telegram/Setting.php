@@ -10,4 +10,9 @@ class Setting extends Model
     protected $connection = 'telegram';
     protected $table = "setting";
 
+    protected $fillable = [
+        'settingCode',
+        'value',
+    ];
+
 }

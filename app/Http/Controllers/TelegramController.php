@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Reponsitories\TelegramReponsitory;
+use App\Repositories\TelegramRepository;
 use App\Service\TelegramService;
 
 class TelegramController extends Controller
@@ -15,14 +15,15 @@ class TelegramController extends Controller
     public $service;
 
     public function __construct(
-        TelegramReponsitory $telegram,
+        TelegramRepository $telegram,
         TelegramService $service
     ) {
         $this->telegram = $telegram;
         $this->service = $service;
     }
 
-    public function getUpdates($bot) {
+    public function getUpdates($bot) 
+    {
         $result = $this->service->botRegister($bot);
         return $result;
     }

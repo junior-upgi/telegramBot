@@ -1,12 +1,12 @@
 <?php
-namespace App\Reponsitories;
+namespace App\Repositories;
 
 use App\Models\telegram\Bot;
 use App\Models\telegram\Message;
 use App\Models\telegram\Setting;
 use App\Models\upgiSystem\User;
 
-class TelegramReponsitory
+class TelegramRepository
 {
 
     public $bot;
@@ -26,17 +26,20 @@ class TelegramReponsitory
         $this->user = $user;
     }
 
-    public function getBotData($bot) {
+    public function getBotData($bot) 
+    {
         $data = $this->bot->where('name', $bot);
         return $data;
     }
 
-    public function getSettingValue($setting) {
+    public function getSettingValue($setting) 
+    {
         $value = $this->setting->where('settingCode', $setting)->first()->value;
         return $value;
     }
 
-    public function updateUserTelegramID($erpID, $telegramID) {
+    public function updateUserTelegramID($erpID, $telegramID) 
+    {
         try {
             $user = $this->user->where('mobileSystemAccount', $erpID);
             if ($user->first() == null) {
@@ -57,7 +60,8 @@ class TelegramReponsitory
         }
     }
 
-    public function checkUser($id) {
+    public function checkUser($id) 
+    {
         $user = $this->user->where('mobileSystemAccount', $id);
         if ($user->first() == null) {
             return false;
@@ -65,7 +69,8 @@ class TelegramReponsitory
         return true;
     }
 
-    public function updateBotUpdateID($bot, $updateID) {
+    public function updateBotUpdateID($bot, $updateID) 
+    {
         try {
             $update = $bot->update(['updateID' => $updateID]);
         } catch (\Exception $e) {

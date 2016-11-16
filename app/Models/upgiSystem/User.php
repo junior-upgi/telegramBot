@@ -9,4 +9,10 @@ class User extends Model
     //
     protected $connection = 'upgiSystem';
     protected $table = "user";
+
+    protected $fillable = [
+        'ID',
+        'mobileSystemAccount',
+        'telegramID',
+    ];
 }

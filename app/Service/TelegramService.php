@@ -1,21 +1,19 @@
 <?php
 namespace App\Service;
 
-use App\Reponsitories\TelegramReponsitory;
+use App\Repositories\TelegramRepository;
 
 class TelegramService 
 {
     public $telegram;
 
-    public function __construct(TelegramReponsitory $telegram) {
+    public function __construct(TelegramRepository $telegram) 
+    {
         $this->telegram = $telegram;
     }
 
-    public function sendToUser($telegramID, $message) {
-        
-    }
-
-    public function botRegister($bot) {
+    public function botRegister($bot) 
+    {
         $botData = $this->telegram->getBotData($bot);
         $token = $botData->first()->token;
         $updateID = $botData->first()->updateID;
@@ -66,7 +64,8 @@ class TelegramService
         return $return;
     }
 
-    public function sendBotMessage($bot, $telegramID, $message) {
+    public function sendBotMessage($bot, $telegramID, $message) 
+    {
         $url = $this->telegram->getSettingValue('bot_api_url');
         $botData = $this->telegram->getBotData($bot);
         $token = $botData->first()->token;
