@@ -37,10 +37,6 @@ class TelegramReponsitoryTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        //$this->mock = $this->initMock(Bot::class);
-        //$this->mock = $this->initMock(Message::class);
-        //$this->mock = $this->initMock(Setting::class);
-        //$this->mock = $this->initMock(User::class);
         $this->target = $this->app->make(TelegramRepository::class);
     }
 
@@ -113,10 +109,10 @@ class TelegramReponsitoryTest extends TestCase
 
         /** act */
         $actual = $target->updateUserTelegramID($erpID, $telegramID);
-
+        
         /** assert */
-        $this->assertTrue($actual['success']);
+        $this->assertTrue($actual);
         $user = User::where('ID', $userID)->first();
-        $this->assertEquals($telegramID, $user->telegramID);
+        $this->assertEquals($expected, $user->telegramID);
     }
 }

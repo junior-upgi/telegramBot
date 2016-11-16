@@ -50,14 +50,10 @@ class RegisterConsole extends Command
         $log_file_path = storage_path('logs/laravel.log');
 
         //執行排程檢查
-        $register = $this->telegram->botRegister('@upgiRegisterBot');;
-        foreach ($register as $re) {
+        $logs = $this->telegram->botRegister('@upgiRegisterBot');;
+        foreach ($logs as $log) {
             //寫入log
-            if ($re->ok) {
-                $log_info = '@register: success. '. $re->result->text . '\r\n';
-            } else {
-                $log_info = '@register: fail. ' . $re['msg'] . '\r\n';
-            }
+            $log_info = $log['msg'] . "\r\n";
             File::append($log_file_path, $log_info);
         }
     }

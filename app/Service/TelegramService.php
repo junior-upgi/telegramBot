@@ -22,46 +22,59 @@ class TelegramService
         $ok = $data->ok;
         $lastID = '';
         $updateData = [];
-        $return = [];
+        $logs = [];
         if ($ok) {
             $lastID = $updateID;
             $result = $data->result;
             foreach ($result as $res) {
-                $update_id = $res->update_id;
-                $message = $res->message;
-                $message_id = $message->message_id;
-                $from_id = $message->from->id;
-                $date = date('Y-m-d H:i:s', $message->date);
-                $text = $message->text;
-
-                if ($update_id > $updateID && $this->telegram->checkUser($text)) {
-                    $erpID = $text;
-                    $updateUser = $this->telegram->updateUserTelegramID($erpID, $from_id);
-
-                    if (!$updateUser['success']) {
-                        array_push($return, ['ok' => false, 'msg' => $updateUser['msg']]);
-                        return $return;
+                $register = $this->userRegister($res, $updateID);
+                $log['msg'] = $register['erpID'] . ': ' . $register['msg'] . ' ' . $register['telegramID'];  
+                array_push($logs, $log);
+                if ($register['success']) {
+                    $erpID = $register['erpID'];
+                    $telegramID =  $register['telegramID'];
+                    $send = $this->sendBotMessage($bot, $telegram, $erpID);
+                    if ($send->ok) {
+                        $log['msg'] = $erpID . ': 發送通知成功!';
+                    } else {
+                        $log['msg'] = $erpID . ': 發送通知失敗!';
                     }
-                    
-                    $array['erpID'] = $erpID;
-                    $array['telegramID'] = $from_id;
-                    array_push($updateData, $array);
+                    array_push($logs, $log);
                 }
-                $lastID = $update_id;
+                $lastID = $res->update_id;
             }
             $updateBot = $this->telegram->updateBotUpdateID($botData, $lastID);
         }
+        return $logs;
+    }
 
-        //發送申請成功訊息給使用者
-        
-        foreach ($updateData as $up) {
-            $erpID = $up['erpID'];
-            $telegramID = $up['telegramID'];
-            $message = $erpID . urlencode(' 您已成功登錄[統義玻璃系統]');
-            $result = $this->sendBotMessage($bot, $telegramID, $message);
-            array_push($return, $result);
+    private function userRegister($res, $updateID)
+    {
+        $update_id = $res->update_id;
+        $message = $res->message;
+        $telegramID = $message->from->id;
+        $text = $message->text;
+
+        if ($update_id > $updateID) {
+            $erpID = $text;
+            $updateUser = $this->telegram->updateUserTelegramID($erpID, $telegramID);
+
+            if ($updateUser) {
+                return [
+                    'success' => true,
+                    'msg' => '註冊成功',
+                    'erpID' => $erpID,
+                    'telegramID' => $telegramID,
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'msg' => '註冊失敗',
+                    'erpID' => $erpID,
+                    'telegramID' => $telegramID,
+                ];
+            }
         }
-        return $return;
     }
 
     public function sendBotMessage($bot, $telegramID, $message) 

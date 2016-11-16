@@ -80,8 +80,7 @@ class TelegramControllerTest extends TestCase
         $expected = ['ok' => true, 'result' => ''];
         $this->mock->shouldReceive('botRegister')
             ->once()
-            ->with('test')
-            //->withAnyArgs()
+            ->withAnyArgs()
             ->andReturn($expected);
 
         // act

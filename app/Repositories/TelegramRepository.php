@@ -40,24 +40,12 @@ class TelegramRepository
 
     public function updateUserTelegramID($erpID, $telegramID) 
     {
-        try {
-            $user = $this->user->where('mobileSystemAccount', $erpID);
-            if ($user->first() == null) {
-                return [
-                    'success' => false,
-                    'msg' => '找不到使用者資訊 erpID:' . $erpID,
-                ];
-            }
+        $user = $this->user->where('mobileSystemAccount', $erpID)->first();
+        if (isset($user)) {
             $update = $user->update(['telegramID' => $telegramID]);
-            return [
-                'success' => true,
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'msg' => $e['errorInfo'][2],
-            ];
+            return true;
         }
+        return false;
     }
 
     public function checkUser($id) 
@@ -71,13 +59,6 @@ class TelegramRepository
 
     public function updateBotUpdateID($bot, $updateID) 
     {
-        try {
-            $update = $bot->update(['updateID' => $updateID]);
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'msg' => $e['errorInfo'][2],
-            ];
-        }
+        $update = $bot->update(['updateID' => $updateID]);
     }
 }
