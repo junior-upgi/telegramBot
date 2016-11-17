@@ -28,8 +28,10 @@ class TelegramService
             $result = $data->result;
             foreach ($result as $res) {
                 $register = $this->userRegister($res, $updateID);
-                $log['msg'] = $register['erpID'] . ': ' . $register['msg'] . ' ' . $register['telegramID'];  
-                array_push($logs, $log);
+                if (isset($register)) {
+                    $log['msg'] = $register['erpID'] . ': ' . $register['msg'] . ' ' . $register['telegramID'];  
+                    array_push($logs, $log);
+                }
                 if ($register['success']) {
                     $erpID = $register['erpID'];
                     $telegramID =  $register['telegramID'];
@@ -62,19 +64,18 @@ class TelegramService
 
             if ($updateUser) {
                 return [
-                    'success' => true,
                     'msg' => '註冊成功',
+                    'erpID' => $erpID,
+                    'telegramID' => $telegramID,
+                ];
+            } else {
+                return [
+                    'msg' => '註冊失敗',
                     'erpID' => $erpID,
                     'telegramID' => $telegramID,
                 ];
             }
         }
-        return [
-            'success' => false,
-            'msg' => '註冊失敗',
-            'erpID' => $text,
-            'telegramID' => $telegramID,
-        ];
     }
 
     public function sendBotMessage($bot, $telegramID, $message) 
