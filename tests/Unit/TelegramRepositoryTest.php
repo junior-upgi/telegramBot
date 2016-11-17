@@ -100,7 +100,7 @@ class TelegramReponsitoryTest extends TestCase
     public function testUpdateUserTelegramID()
     {
         /** arrange */
-        $user = User::first();
+        $user = User::where('erpID', '<>', null)->first();
         $userID = $user->ID;
         $erpID = $user->mobileSystemAccount;
         $telegramID = 'test1234';
@@ -114,5 +114,26 @@ class TelegramReponsitoryTest extends TestCase
         $this->assertTrue($actual);
         $user = User::where('ID', $userID)->first();
         $this->assertEquals($expected, $user->telegramID);
+    }
+
+    /**
+     * @test TelegramRepository@checkUser
+     */
+    public function testCheckUser()
+    {
+        /** arrange */
+        $user = User::first();
+        $userID = $user->mobileSystemAccount;
+        $target = App::make(TelegramRepository::class);
+        $expected = true;
+
+        /** act */
+        $actual = $target->checkUser($userID);
+        $user->delete();
+        $actualFalse = $target->checkUser($userID);
+        //dd($user);
+        /** assert */
+        $this->assertTrue($actual);
+        $this->assertTrue(!$actualFalse);
     }
 }

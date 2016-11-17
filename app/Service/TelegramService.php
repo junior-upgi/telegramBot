@@ -33,7 +33,7 @@ class TelegramService
                 if ($register['success']) {
                     $erpID = $register['erpID'];
                     $telegramID =  $register['telegramID'];
-                    $send = $this->sendBotMessage($bot, $telegram, $erpID);
+                    $send = $this->sendBotMessage($bot, $telegramID, $erpID);
                     if ($send->ok) {
                         $log['msg'] = $erpID . ': 發送通知成功!';
                     } else {
