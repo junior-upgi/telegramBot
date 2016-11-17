@@ -33,7 +33,8 @@ class TelegramService
                 if ($register['success']) {
                     $erpID = $register['erpID'];
                     $telegramID =  $register['telegramID'];
-                    $send = $this->sendBotMessage($bot, $telegramID, $erpID);
+                    $message = $erpID . ' 您已成功登錄[統義玻璃系統]';
+                    $send = $this->sendBotMessage($bot, $telegramID, $message);
                     if ($send->ok) {
                         $log['msg'] = $erpID . ': 發送通知成功!';
                     } else {
