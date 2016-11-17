@@ -67,15 +67,14 @@ class TelegramService
                     'erpID' => $erpID,
                     'telegramID' => $telegramID,
                 ];
-            } else {
-                return [
-                    'success' => false,
-                    'msg' => '註冊失敗',
-                    'erpID' => $erpID,
-                    'telegramID' => $telegramID,
-                ];
             }
         }
+        return [
+            'success' => false,
+            'msg' => '註冊失敗',
+            'erpID' => $text,
+            'telegramID' => $telegramID,
+        ];
     }
 
     public function sendBotMessage($bot, $telegramID, $message) 
