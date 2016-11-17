@@ -64,12 +64,14 @@ class TelegramService
 
             if ($updateUser) {
                 return [
+                    'success' => true,
                     'msg' => '註冊成功',
                     'erpID' => $erpID,
                     'telegramID' => $telegramID,
                 ];
             } else {
                 return [
+                    'success' => false,
                     'msg' => '註冊失敗',
                     'erpID' => $erpID,
                     'telegramID' => $telegramID,
