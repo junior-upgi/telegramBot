@@ -89,7 +89,15 @@ class TelegramService
         $token = $botData->first()->token;
         $method = '/sendMessage';
         $sendUrl = $url . $token . $method . '?chat_id=' . $telegramID . '&text=' . $message;
-        $send = json_decode(file_get_contents($sendUrl));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $sendUrl);
+        curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $file_get = curl_exec($ch);
+        curl_close($ch);
+
+        $send = json_decode($file_get);
         return $send;
     }
 }
