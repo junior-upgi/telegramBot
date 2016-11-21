@@ -17,7 +17,8 @@ class TelegramService
         $botData = $this->telegram->getBotData($bot);
         $token = $botData->first()->token;
         $updateID = $botData->first()->updateID;
-        $url = $this->telegram->getSettingValue('bot_api_url');
+        //$url = $this->telegram->getSettingValue('bot_api_url');
+        $url = 'https://api.telegram.org/bot';
         $data = json_decode(file_get_contents($url . $token . "/getUpdates"));
         $ok = $data->ok;
         $lastID = '';
@@ -82,7 +83,8 @@ class TelegramService
 
     public function sendBotMessage($bot, $telegramID, $message) 
     {
-        $url = $this->telegram->getSettingValue('bot_api_url');
+        //$url = $this->telegram->getSettingValue('bot_api_url');
+        $url = 'https://api.telegram.org/bot';
         $botData = $this->telegram->getBotData($bot);
         $token = $botData->first()->token;
         $method = '/sendMessage';
