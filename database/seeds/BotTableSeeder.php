@@ -27,7 +27,28 @@ class BotTableSeeder extends Seeder
         $this->bot->insert([
             'name' => '@upgiRegisterBot',
             'token' => '296411532:AAF9U92K7LLKB7g-jvvG4remdHGi90ph2fI',
-            'updateID' => '831723827',
+            'updateID' => '831723842',
+        ]);
+
+        $this->bot->insert([
+            'name' => '@productDevelopmentBot',
+            'token' => '278943684:AAHQDQMZrI2_3jPKnrY8tdrhn-2mKN9CwpI',
+            'updateID' => '0',
+        ]);
+
+
+        //joinedGroupIDList: [telegramChatGroup.list[1].id]
+        $this->bot->insert([
+            'name' => '@seedCountBot',
+            'token' => '251686312:AAG8_sczOJvJSwtese4kgzH95RLyX5ZJ114',
+            'updateID' => '0',
+        ]);
+
+        //joinedGroupIDList: [telegramChatGroup.list[0].id]
+        $this->bot->insert([
+            'name' => '@overdueMonitorBot',
+            'token' => '267738010:AAGT17aLumIfVPNeFWht8eUEPuC2HfAouGk',
+            'updateID' => '0',
         ]);
     }
 }

@@ -100,9 +100,15 @@ class TelegramReponsitoryTest extends TestCase
     public function testUpdateUserTelegramID()
     {
         /** arrange */
-        $user = User::where('erpID', '<>', null)->first();
-        $userID = $user->ID;
-        $erpID = $user->mobileSystemAccount;
+        //$user = User::where('erpID', '<>', null)->first();
+        User::insert([
+            'ID' => 'testID',
+            'mobileSystemAccount' => 'erpID',
+            'erpID' => 'erpID',
+        ]);
+        $user = User::where('ID', 'testID');
+        $userID = $user->first()->ID;
+        $erpID = $user->first()->mobileSystemAccount;
         $telegramID = 'test1234';
         $target = App::make(TelegramRepository::class);
         $expected = $telegramID;
@@ -112,8 +118,9 @@ class TelegramReponsitoryTest extends TestCase
         
         /** assert */
         $this->assertTrue($actual);
-        $user = User::where('ID', $userID)->first();
-        $this->assertEquals($expected, $user->telegramID);
+        $user = User::where('ID', $userID);
+        $this->assertEquals($expected, $user->first()->telegramID);
+        $user->delete();
     }
 
     /**
@@ -122,8 +129,13 @@ class TelegramReponsitoryTest extends TestCase
     public function testCheckUser()
     {
         /** arrange */
-        $user = User::first();
-        $userID = $user->mobileSystemAccount;
+        User::insert([
+            'ID' => 'testID2',
+            'mobileSystemAccount' => 'erpID2',
+            'erpID' => 'erpID2',
+        ]);
+        $user = User::where('ID', 'testID2');
+        $userID = $user->first()->mobileSystemAccount;
         $target = App::make(TelegramRepository::class);
         $expected = true;
 
@@ -131,7 +143,28 @@ class TelegramReponsitoryTest extends TestCase
         $actual = $target->checkUser($userID);
         $user->delete();
         $actualFalse = $target->checkUser($userID);
-        //dd($user);
+        
+        /** assert */
+        $this->assertTrue($actual);
+        $this->assertTrue(!$actualFalse);
+    }
+
+    /**
+     * @test TelegramRepository@updateBotUpdateID
+     */
+    public function testUpdateBotUpdateID()
+    {
+        /** arrange */
+        $this->target = $this->initMock(Bot::class);
+        $this->mock->shouldReceive('update')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn(true);
+        $expected = true;
+
+        /** act */
+        $actual = $target->updateBotUpdateID();
+        
         /** assert */
         $this->assertTrue($actual);
         $this->assertTrue(!$actualFalse);

@@ -38,7 +38,7 @@ class TelegramControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->mock = $this->initMock(TelegramRepository::class);
+        //$this->mock = $this->initMock(TelegramRepository::class);
         $this->mock = $this->initMock(TelegramService::class);
         $this->target = $this->app->make(TelegramController::class);
     }

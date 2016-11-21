@@ -40,8 +40,8 @@ class TelegramRepository
 
     public function updateUserTelegramID($erpID, $telegramID) 
     {
-        $user = $this->user->where('mobileSystemAccount', $erpID)->first();
-        if (isset($user)) {
+        $user = $this->user->where('mobileSystemAccount', $erpID);
+        if ($user->exists()) {
             $update = $user->update(['telegramID' => $telegramID]);
             return true;
         }

@@ -53,7 +53,7 @@ return [
         ],
 
         'telegram' => [
-            'driver' => 'mysql',
+            'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
@@ -68,11 +68,11 @@ return [
 
         'upgiSystem' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
+            'host' => '192.168.168.86',
+            'port' => '3306',
             'database' => 'upgiSystem',
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'username' => 'spark',
+            'password' => 'pa676579',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
