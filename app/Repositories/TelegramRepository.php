@@ -28,7 +28,7 @@ class TelegramRepository
 
     public function getBotData($bot) 
     {
-        $data = $this->bot->where('name', $bot);
+        $data = $this->bot->where('username', $bot);
         return $data;
     }
 
