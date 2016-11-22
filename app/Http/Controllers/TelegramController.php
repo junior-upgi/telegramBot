@@ -27,4 +27,14 @@ class TelegramController extends Controller
         $result = $this->service->botRegister($bot);
         return $result;
     }
+
+    public function sendMessage($bot, $user, $message)
+    {
+        $telegramID = $this->telegram->getUserTelegramID($user); 
+        $result = $this->service->sendBotMessage('testBot', $telegramID, $message);
+        if ($result) {
+            return 'success!!';
+        }
+        return 'fail!!';
+    }
 }

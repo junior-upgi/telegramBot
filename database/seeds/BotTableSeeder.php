@@ -18,6 +18,7 @@ class BotTableSeeder extends Seeder
     public function run()
     {
         //
+        
         $this->bot->insert([
             'name' => '@sparkTestBot',
             'token' => '260542039:AAEOxo0MbczouifWwQKDyIyJKBN6Iy43htk',

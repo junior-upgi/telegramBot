@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Message extends Migration
+class Chat extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,10 @@ class Message extends Migration
     public function up()
     {
         //
-        Schema::create('message', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('botID');
-            $table->string('updateID');
-            $table->string('fromID');
-            $table->string('fromUsername');
-            $table->datetime('date');
-            $table->text('text');
+        Schema::create('bot', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -34,6 +30,5 @@ class Message extends Migration
     public function down()
     {
         //
-        Schema::drop('message');
     }
 }
