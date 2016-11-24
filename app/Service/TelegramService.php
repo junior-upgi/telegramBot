@@ -89,15 +89,42 @@ class TelegramService
         $token = $botData->first()->token;
         $method = '/sendMessage';
         $sendUrl = $url . $token . $method . '?chat_id=' . $telegramID . '&text=' . $message;
+        $send = $this->curlReturnJson($sendUrl);
+        return $send;
+    }
 
+    public function getUserTelegramInfo()
+    {
+        $url = 'https://api.telegram.org/bot296411532:AAF9U92K7LLKB7g-jvvG4remdHGi90ph2fI/getChat?chat_id=';
+        $user = $this->telegram->getUserInfo();
+        $list = [];
+        foreach ($user as $info) {
+            $set = [];
+            $set['ID'] = $info->staff->ID;
+            $set['name'] = $info->staff->name;
+            $set['telegramID'] = $info->telegramID;
+            $set['username'] = $info->telegramUserName;
+            if ($info->telegramUserName == null) {
+                $get = $this->curlReturnJson($url . $set['telegramID']);
+                if ($get->ok) {
+                    $set['username'] = $get->result->username;
+                    $this->telegram->updateUserTelegramUserName($set['ID'], $set['username']);
+                }
+            }
+            array_push($list, $set);
+        }
+        return $list;
+    }
+
+    private function curlReturnJson($url)
+    {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $sendUrl);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $file_get = curl_exec($ch);
+        $get = curl_exec($ch);
         curl_close($ch);
-
-        $send = json_decode($file_get);
-        return $send;
+        $json = json_decode($get);
+        return $json;
     }
 }

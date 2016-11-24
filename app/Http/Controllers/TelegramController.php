@@ -37,4 +37,9 @@ class TelegramController extends Controller
         }
         return 'fail!!';
     }
+    public function getUserList()
+    {
+        $list = $this->service->getUserTelegramInfo();
+        return view('user')->with('user', $list);
+    }
 }

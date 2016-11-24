@@ -4,6 +4,8 @@ namespace App\Models\upgiSystem;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\UPGWeb\StaffNode;
+
 class User extends Model
 {
     //
@@ -15,4 +17,9 @@ class User extends Model
         'mobileSystemAccount',
         'telegramID',
     ];
+
+    public function staff()
+    {
+        return $this->hasOne(StaffNode::class, 'ID', 'erpID');
+    }
 }

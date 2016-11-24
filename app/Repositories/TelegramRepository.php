@@ -37,9 +37,23 @@ class TelegramRepository
 
     public function updateUserTelegramID($erpID, $telegramID) 
     {
+        $params = ['telegramID' => $telegramID];
+        $update = $this->updateUser($erpID,$params);
+        return $update;
+    }
+
+    public function updateUserTelegramUserName($erpID, $username)
+    {
+        $params = ['telegramUserName' => $username];
+        $update = $this->updateUser($erpID,$params);
+        return $update;
+    }
+
+    private function updateUser($erpID, $params)
+    {
         $user = $this->user->where('mobileSystemAccount', $erpID);
         if ($user->exists()) {
-            $update = $user->update(['telegramID' => $telegramID]);
+            $update = $user->update($params);
             return true;
         }
         return false;
@@ -57,5 +71,11 @@ class TelegramRepository
     public function updateBotUpdateID($bot, $updateID) 
     {
         $update = $bot->update(['updateID' => $updateID]);
+    }
+
+    public function getUserInfo()
+    {
+        $user = $this->user->where('telegramID', '<>', null)->with('staff')->get();
+        return $user;
     }
 }
