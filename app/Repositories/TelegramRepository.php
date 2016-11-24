@@ -35,9 +35,8 @@ class TelegramRepository
         return $data;
     }
 
-    public function updateUserTelegramID($erpID, $telegramID) 
+    public function updateUserTelegramID($erpID, $params) 
     {
-        $params = ['telegramID' => $telegramID];
         $update = $this->updateUser($erpID,$params);
         return $update;
     }

@@ -58,11 +58,13 @@ class TelegramService
         $update_id = $res->update_id;
         $message = $res->message;
         $telegramID = $message->from->id;
+        $username = $message->from->username;
         $text = $message->text;
 
         if ($update_id > $updateID) {
             $erpID = $text;
-            $updateUser = $this->telegram->updateUserTelegramID($erpID, $telegramID);
+            $params = ['telegramID' => $telegramID, 'telegramUserName' => $username];
+            $updateUser = $this->telegram->updateUserTelegramID($erpID, $params);
 
             if ($updateUser) {
                 return [
