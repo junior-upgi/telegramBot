@@ -56,5 +56,10 @@ class RegisterConsole extends Command
             $log_info = $log['msg'] . "\r\n";
             File::append($log_file_path, $log_info);
         }
+
+        //執行系統監控
+        $log = $this->telegram->systemLook();
+        $log_info = \Carbon\Carbon::now() .  $log . "\r\n";
+        File::append($log_file_path, $log_info);
     }
 }

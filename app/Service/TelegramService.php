@@ -130,4 +130,16 @@ class TelegramService
         $json = json_decode($get);
         return $json;
     }
+
+    public function systemLook()
+    {
+        try {
+            $botData = $this->telegram->getBotData('testBot');
+            $token = $botData->first()->token;
+            return ' system check true!';
+        } catch (\Exception $e) {
+            return ' system check fail!';
+        }
+        
+    }
 }
