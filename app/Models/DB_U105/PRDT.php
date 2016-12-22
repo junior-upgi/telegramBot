@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\UPGWeb;
+namespace App\Models\DB_U105;
 
 use Illuminate\Database\Eloquent\Model;
 
