@@ -85,7 +85,7 @@ class TelegramRepository
     public function test()
     {
         try {
-            $list = $this->prd->all()->get();
+            $list = $this->prd->get();
             return [
                 'success' => true,
                 'msg' => count($list),
