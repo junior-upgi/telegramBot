@@ -18,12 +18,12 @@ use App\Service\TelegramService;
  *
  * @package App\Console
 */
-class RegisterConsole extends Command
+class TestConsole extends Command
 {
     /** @var string 命令名稱 */
-    protected $signature = 'register';
+    protected $signature = 'test';
     /** @var string 命令描述 */
-    protected $description = '每分鐘檢查註冊';
+    protected $description = '每分鐘檢查DB';
     /** @var TelegramService */
     private $telegram;
 
@@ -49,17 +49,9 @@ class RegisterConsole extends Command
         // 檔案紀錄在 storage/logs/laravel.log
         $log_file_path = storage_path('logs/laravel.log');
 
-        //執行排程檢查
-        $logs = $this->telegram->botRegister('upgiRegisterBot');
-        foreach ($logs as $log) {
-            //寫入log
-            $log_info = $log['msg'] . "\r\n";
-            File::append($log_file_path, $log_info);
-        }
-
         //執行系統監控
-        //$log = $this->telegram->systemLook();
-        //$log_info = \Carbon\Carbon::now() .  $log . "\r\n";
-        //File::append($log_file_path, $log_info);
+        $log = $this->telegram->test();
+        $log_info = \Carbon\Carbon::now() .  $log['success'] . ': ' . $log['msg'] . "\r\n";
+        File::append($log_file_path, $log_info);
     }
 }

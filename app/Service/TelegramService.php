@@ -142,4 +142,10 @@ class TelegramService
         }
         
     }
+
+    public function test()
+    {
+        $test =  $this->telegram->test();
+        return $test;
+    }   
 }

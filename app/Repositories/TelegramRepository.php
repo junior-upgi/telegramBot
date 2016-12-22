@@ -3,19 +3,23 @@ namespace App\Repositories;
 
 use App\Models\telegram\Bot;
 use App\Models\upgiSystem\User;
+use App\Models\DB_U105\PRDT;
 
 class TelegramRepository
 {
 
     public $bot;
     public $user;
+    public $prd;
 
     public function __construct(
         Bot $bot,
-        User $user
+        User $user,
+        PRDT $prd
     ) {
         $this->bot = $bot;
         $this->user = $user;
+        $this->prd = $prd;
     }
 
     public function getUserTelegramID($erp_id)
@@ -76,5 +80,21 @@ class TelegramRepository
     {
         $user = $this->user->where('telegramID', '<>', null)->with('staff')->get();
         return $user;
+    }
+
+    public function test()
+    {
+        try {
+            $list = $this->prd->all()->get();
+            return [
+                'success' => true,
+                'msg' => count($list),
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'msg' => $e,
+            ];
+        }
     }
 }
