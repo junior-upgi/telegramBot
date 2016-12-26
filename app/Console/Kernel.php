@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('register')->everyMinute();
-        $schedule->command('test')->everyMinute();
+        //$schedule->command('test')->everyMinute();
     }
 
     /**
