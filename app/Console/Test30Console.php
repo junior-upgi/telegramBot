@@ -51,7 +51,7 @@ class Test30Console extends Command
 
         //執行系統監控
         $log = $this->telegram->test();
-        $log_info = \Carbon\Carbon::now() .  $log['success'] . ': ' . $log['msg'] . "\r\n";
+        $log_info = '#每30分：' . \Carbon\Carbon::now() .  $log['success'] . ': ' . $log['msg'] . "\r\n";
         File::append($log_file_path, $log_info);
     }
 }
