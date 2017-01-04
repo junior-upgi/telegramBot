@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         //
         \App\Console\RegisterConsole::class,
         \App\Console\TestConsole::class,
+        \App\Console\Test30Console::class,
     ];
 
     /**
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('register')->everyMinute();
         //$schedule->command('test')->everyMinute();
+        //$schedule->command('test30')->cron('*/15 * * * *');
     }
 
     /**
