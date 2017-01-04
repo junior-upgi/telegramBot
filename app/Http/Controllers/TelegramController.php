@@ -44,7 +44,7 @@ class TelegramController extends Controller
     }
     public function test()
     {
-        $res = $this->test();
+        $res = $this->service->test();
         return $res;
     }
 }
