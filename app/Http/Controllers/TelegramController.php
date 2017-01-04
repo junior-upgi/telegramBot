@@ -42,4 +42,9 @@ class TelegramController extends Controller
         $list = $this->service->getUserTelegramInfo();
         return view('user')->with('user', $list);
     }
+    public function test()
+    {
+        $res = $this->test();
+        return $res;
+    }
 }

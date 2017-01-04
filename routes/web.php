@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('getUpdates/{bot}', 'TelegramController@getUpdates');
 Route::get('sendMessage/{bot}/{user}/{message}', 'TelegramController@sendMessage');
 Route::get('getUser', 'TelegramController@getUserList');
+
+Route::get('test', 'TelegramController@test');
